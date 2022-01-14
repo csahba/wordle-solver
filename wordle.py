@@ -1,53 +1,53 @@
 import random
 
-externaldictionary = 'words_alpha.txt'
+# Game responds to guesses with a list of G, Y and R for Green (correct), Yellow (incorrect position), Red (letter not in word)
+# enter a space for an automatic guess
+
+externaldictionary = 'enable1.txt'
 
 def generatedict(n):
-    #return ['abc', 'abb', 'acc', 'add', 'bde', 'bba']
     ndict = []
     with open(externaldictionary, 'r') as words:
         ndict = [word.strip() for word in words if len(word.strip())==n]
-            # if len(word) == n:
-            #     worddict.append(word)
     return ndict
 
 def check(guess, puzzle):
-    if guess == puzzle:
-        return True
+    reply = []
     for x in range(len(guess)):
         if guess[x] == puzzle[x]:
-            print('G ')
+            reply.append('G')
         elif guess[x] in puzzle:
-            print('Y ')
+            reply.append('Y')
         else:
-            print('R ')
-    return False
+            reply.append('R')
+    print(reply)
+    return reply
 
 
 def play(wordlength=5, guesses=6):
-    # while True:
-    #     wordlength = input('Input game word length:')
-    #     if wordlength in (range(1,largestword(externaldictionary)+1)):
-    #         break
     ndict = generatedict(wordlength)
     puzzle = random.choice(ndict)
-    print(puzzle)
-    guesscount = 1
-    while guesscount < guesses+1:
-        guess = input('Input guess' + str(guesscount) + ':')
+    #print(puzzle)
+    guesscount = 0
+    reply = ['']*guesses
+    while guesscount < guesses:
+        guess = input('Input guess ' + str(guesscount+1) + ':')
+        if guess == ' ':
+            guess = guesser(reply, ndict)
+            print('guesser picks: ' + guess)
         if guess in ndict:
-            guesscount+=1
-            if check(guess, puzzle):
-                print('You Win')
+            reply[guesscount] = check(guess, puzzle)
+            if reply[guesscount] == ['G']*wordlength:
+                print('You Win!')
                 return 1
+            guesscount+=1
         else:
-            'Invalid word'
-        
-    print('No more guesses! You lose')
+            print('Invalid word')        
+    print('No more guesses! You lose. Solution was: ' + puzzle)
     return 0
 
-def solve(puzzle, ndict):
-    return
+def guesser(puzzle, ndict):
+    return random.choice(ndict)
 
 def largestword(dict):
     big = ''
@@ -58,5 +58,4 @@ def largestword(dict):
     return len(big)
 
 if __name__ == "__main__":    
-
     play()
