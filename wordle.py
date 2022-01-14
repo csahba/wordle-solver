@@ -3,7 +3,7 @@ import random
 # Game responds to guesses with a list of G, Y and R for Green (correct), Yellow (incorrect position), Red (letter not in word)
 # enter a space for an automatic guess
 
-externaldictionary = 'enable1.txt'
+externaldictionary = 'usa2.txt'
 
 def generatedict(n):
     ndict = []
