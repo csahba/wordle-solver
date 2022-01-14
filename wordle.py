@@ -1,4 +1,3 @@
-from pickletools import read_bytes1
 import random
 
 externaldictionary = 'words_alpha.txt'
